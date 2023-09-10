@@ -1,0 +1,20 @@
+services:
+  mock-mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: mock_db
+    ports:
+      - "3306:3306"
+
+  tests:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/code
+    env_file:
+      .env
+    command: python -m pytest -vv -s
