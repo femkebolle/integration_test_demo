@@ -1,0 +1,39 @@
+name: Integration Tests
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mock-mysql:
+        image: mysql:latest
+        env:
+          MYSQL_DATABASE: mock_db
+          MYSQL_USER: test
+          MYSQL_ROOT_PASSWORD: root_password
+          MYSQL_PASSWORD: test
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build and run integration tests
+        run: |
+          docker-compose build
+          docker-compose up -d
+          docker-compose exec tests sh -c "wait-for-it mock-mysql:3306 -- python -m pytest -vv -s"
+        env:
+          DB_HOST: mock-mysql  # Use the service name defined in docker-compose.yml
+          DB_PORT: 3306
+          DB_USER: test
+          DB_PASSWORD: test
+          DB_DATABASE: mock_db
+
+      - name: Stop and clean up containers
+        run: |
+          docker-compose down
