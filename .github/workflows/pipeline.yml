@@ -24,7 +24,11 @@ jobs:
 
       - name: Build and run integration tests
         run: |
-          docker-compose up mock-mysql
+          docker-compose ps
+          docker network ls
+          docker-compose up -d mock-mysql
+          docker-compose ps
+          docker network ls
           sleep 30
           docker-compose up tests
           docker-compose ps
