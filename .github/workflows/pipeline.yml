@@ -24,6 +24,7 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install -r requirements-dev.txt
+      - run: pip install -r requirements.txt
       - run: coverage run --source=src -m pytest -vv
         env:
          LOG_LEVEL: DEBUG
