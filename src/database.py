@@ -1,16 +1,15 @@
 from os import environ
-from typing import List, Tuple, Type, Union
+from typing import List, Tuple, Union
 
 import mysql.connector
-from mysql.connector.errors import InternalError, OperationalError
 
 from src.base_logger import logger
 
 
 class Database:
 
-    def __init__(self, db):
-        self.db = db
+    def __init__(self, db_name):
+        self.db_name = db_name
         self.connection = None
         self.cursor = None
 
@@ -36,7 +35,7 @@ class Database:
             port=int(environ['DB_PORT']),
             user=environ['DB_USER'],
             password=environ['DB_PASSWORD'],
-            db=self.db,
+            db=self.db_name,
             autocommit=False)
         return connection
 

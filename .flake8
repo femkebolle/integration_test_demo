@@ -1,0 +1,16 @@
+[flake8]
+ignore = E501, E731, N815, A003
+exclude =
+    env,
+    __pycache__,
+    .git,
+    .github
+    .flake8,
+    node_modules,
+    venv,
+    .serverless,
+    tests/fixtures.py,
+    scratch*py
+
+show_source = True
+max-complexity = 15
