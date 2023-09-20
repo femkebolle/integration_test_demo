@@ -15,6 +15,10 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./:/code
-    env_file:
-      .env
+    environment:
+      DB_COMPANY_SCANNER: test_database
+      DB_USER: test
+      DB_PASSWORD: test
+      DB_HOST: host.docker.internal
+      DB_PORT: 3306
     command: python -m pytest -vv -s
