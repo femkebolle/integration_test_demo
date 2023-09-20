@@ -5,4 +5,4 @@ CREATE TABLE sample_table (
 );
 """
 
-TABLE_NAMES = ['sample_table']
+TABLE_CREATION_QUERIES = {'sample_table': CREATE_SAMPLE_TABLE}

@@ -2,10 +2,10 @@ services:
   mock-mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
       MYSQL_DATABASE: mock_db
+      MYSQL_USER: test
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: test
     ports:
       - "3306:3306"
 
@@ -16,7 +16,7 @@ services:
     volumes:
       - ./:/code
     environment:
-      DB_COMPANY_SCANNER: test_database
+      DB_NAME: mock_db
       DB_USER: test
       DB_PASSWORD: test
       DB_HOST: host.docker.internal

@@ -15,7 +15,7 @@ logger.propagate = False
 logger.addHandler(stream_handler)
 # Specifying src stops external modules log messages, especially when on debug
 logger = getLogger("src")
-logger.setLevel('INFO')
+logger.setLevel('DEBUG')
 
 
 def handle_exception(exc_type, exc_value, exc_traceback):
