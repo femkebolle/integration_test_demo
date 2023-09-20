@@ -24,5 +24,4 @@ services:
       DB_PASSWORD: test
       DB_HOST: host.docker.internal
       DB_PORT: 3306
-    command: python -m pytest -vv -s
-
+    command: python -m pytest -vv

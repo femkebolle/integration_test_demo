@@ -1,4 +1,4 @@
-name: Integration Tests
+name: Tests
 
 on: pull_request
 
@@ -34,15 +34,3 @@ jobs:
          DB_PORT: 3306
       - run: coverage report -m
 
-
-
-##        env:
-##          DB_HOST: mock-mysql  # Use the service name defined in docker-compose.yml
-##          DB_PORT: 3306
-##          DB_USER: test
-##          DB_PASSWORD: test
-##          DB_DATABASE: mock_db
-#
-#      - name: Stop and clean up containers
-#        run: |
-#          docker-compose down
