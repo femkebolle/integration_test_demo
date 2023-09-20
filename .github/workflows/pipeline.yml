@@ -1,9 +1,9 @@
-name: Integration Tests
+name: Tests
 
 on: pull_request
 
 jobs:
-  build:
+  pytests:
     runs-on: ubuntu-latest
 
     services:
@@ -19,21 +19,17 @@ jobs:
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build and run integration tests
-        run: |
-          docker-compose build
-          docker-compose up -d
-          docker-compose exec tests sh -c "wait-for-it mock-mysql:3306 -- python -m pytest -vv -s"
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install -r requirements-dev.txt
+      - run: pip install -r requirements.txt
+      - run: coverage run --source=src -m pytest -vv -s
         env:
-          DB_HOST: mock-mysql  # Use the service name defined in docker-compose.yml
-          DB_PORT: 3306
-          DB_USER: test
-          DB_PASSWORD: test
-          DB_DATABASE: mock_db
-
-      - name: Stop and clean up containers
-        run: |
-          docker-compose down
+         DB_NAME: mock_db
+         DB_USER: test
+         DB_PASSWORD: test
+         DB_HOST: localhost
+         DB_PORT: 3306
+      - run: coverage report -m
