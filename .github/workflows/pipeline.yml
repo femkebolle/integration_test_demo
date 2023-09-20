@@ -24,15 +24,14 @@ jobs:
 
       - name: Build and run integration tests
         run: |
-          docker-compose build
-#          docker-compose up -d
-          docker-compose exec tests sh -c "wait-for-it mock-mysql:3306 -- python -m pytest -vv -s"
-        env:
-          DB_HOST: mock-mysql  # Use the service name defined in docker-compose.yml
-          DB_PORT: 3306
-          DB_USER: test
-          DB_PASSWORD: test
-          DB_DATABASE: mock_db
+          docker-compose up tests
+
+#        env:
+#          DB_HOST: mock-mysql  # Use the service name defined in docker-compose.yml
+#          DB_PORT: 3306
+#          DB_USER: test
+#          DB_PASSWORD: test
+#          DB_DATABASE: mock_db
 
       - name: Stop and clean up containers
         run: |
