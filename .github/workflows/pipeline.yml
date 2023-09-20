@@ -25,7 +25,7 @@ jobs:
           python-version: '3.10'
       - run: pip install -r requirements-dev.txt
       - run: pip install -r requirements.txt
-      - run: coverage run --source=src -m pytest -vv
+      - run: coverage run --source=src -m pytest -vv -s
         env:
          DB_NAME: mock_db
          DB_USER: test
