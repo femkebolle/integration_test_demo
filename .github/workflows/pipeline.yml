@@ -6,17 +6,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      mock-mysql:
-        image: mysql:latest
-        env:
-          MYSQL_DATABASE: mock_db
-          MYSQL_USER: test
-          MYSQL_ROOT_PASSWORD: root_password
-          MYSQL_PASSWORD: test
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+#    services:
+#      mock-mysql:
+#        image: mysql:latest
+#        env:
+#          MYSQL_DATABASE: mock_db
+#          MYSQL_USER: test
+#          MYSQL_ROOT_PASSWORD: root_password
+#          MYSQL_PASSWORD: test
+#        ports:
+#          - 3306:3306
+#        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
@@ -24,6 +24,7 @@ jobs:
 
       - name: Build and run integration tests
         run: |
+          docker-compose up mock-mysql
           docker-compose up tests
 
 #        env:

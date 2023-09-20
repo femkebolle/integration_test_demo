@@ -19,6 +19,21 @@ services:
       DB_NAME: mock_db
       DB_USER: test
       DB_PASSWORD: test
-      DB_HOST: mock-mysql
+      DB_HOST: docker.host.internal
       DB_PORT: 3306
     command: python -m pytest -vv -s
+
+  local-tests:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/code
+    environment:
+      DB_NAME: mock_db
+      DB_USER: test
+      DB_PASSWORD: test
+      DB_HOST: docker.host.internal # same as tests but with a different host
+      DB_PORT: 3306
+    command: python -m pytest -vv -s
+

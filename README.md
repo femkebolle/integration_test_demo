@@ -7,7 +7,7 @@
 
 2. Once the DB is up and running
 
-`docker-compose up tests`
+`docker-compose up local-tests`
 
 3. optionally, login to the mysql DB via the console to poke around
 
