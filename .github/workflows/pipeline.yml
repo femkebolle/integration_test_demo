@@ -25,7 +25,10 @@ jobs:
       - name: Build and run integration tests
         run: |
           docker-compose up mock-mysql
+          sleep 30
           docker-compose up tests
+          docker-compose ps
+          docker network ls
 
 #        env:
 #          DB_HOST: mock-mysql  # Use the service name defined in docker-compose.yml
