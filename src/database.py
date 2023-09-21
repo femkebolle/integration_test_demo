@@ -1,6 +1,6 @@
 from os import environ
 from time import sleep
-from typing import List, Tuple, Union, Type
+from typing import List, Tuple, Type, Union
 
 import mysql.connector
 from mysql.connector.errors import InternalError, OperationalError
