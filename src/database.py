@@ -1,7 +1,9 @@
 from os import environ
-from typing import List, Tuple, Union
+from time import sleep
+from typing import List, Tuple, Type, Union
 
 import mysql.connector
+from mysql.connector.errors import InternalError, OperationalError
 
 from src.base_logger import logger
 
@@ -29,6 +31,33 @@ class Database:
                 self.commit()
             self.close()
 
+    class Decorators:
+        @staticmethod
+        def retry(tries: int, delay: float, exceptions: Tuple[Type[Exception], ...]):
+            """
+            Retry Decorator
+            Retries the wrapped function/method `times` times if the exceptions listed in ``exceptions`` are thrown
+            """
+
+            def decorator(func):
+                def newfn(*args, **kwargs):
+                    attempt = 0
+                    while attempt < tries:
+                        try:
+                            return func(*args, **kwargs)
+                        except exceptions as e:
+                            logger.warning('Exception %s thrown when attempting to run %s, attempt %d of %d' %
+                                           (e, func, attempt, tries)
+                                           )
+                            sleep(delay)
+                            attempt += 1
+                    return func(*args, **kwargs)
+
+                return newfn
+
+            return decorator
+
+    @Decorators.retry(tries=3, delay=5, exceptions=(OperationalError, InternalError))
     def connect(self):
         connection = mysql.connector.connect(
             host=environ['DB_HOST'],

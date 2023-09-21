@@ -1,6 +1,6 @@
 services:
   mock-mysql:
-    image: mysql:latest
+    image: mysql:8.0.33
     environment:
       MYSQL_DATABASE: mock_db
       MYSQL_USER: test
@@ -10,7 +10,6 @@ services:
       - "3306:3306"
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "test", "-p", "test" ]
-
 
   tests:
     build:
@@ -24,4 +23,6 @@ services:
       DB_PASSWORD: test
       DB_HOST: host.docker.internal
       DB_PORT: 3306
-    command: python -m pytest -vv -s
+    depends_on:
+      - mock-mysql
+    command: ["./wait-for-it.sh", "mock-mysql:3306", "--", "python", "-m", "pytest", "-vv", "-s"]
