@@ -9,7 +9,7 @@ Additionally, the tests can be run locally as follows
 
 1. `docker-compose up tests`
 
-This starts the mysql container automatically, waits for it to be available using the wait-for-it.sh shell script,
+This starts the mysql container automatically, waits for it to be available using the wait-for-it.sh shell script (taken from [here](https://github.com/vishnubob/wait-for-it)),
 then runs the tests.
 
 On subsequent runs, the mysql container will already be running so the tests will be quicker.
